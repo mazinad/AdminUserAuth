@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Management System</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1> Student System</h1>
+		<hr>
+		<h2>Save Student</h2>
+		<form action="#" th:action="@{/saveStudent}" th:object="${student}"
+			method="POST">
+		<input type="text" th:field="*{first_name}"
+			placeholder="First Name" class="form-control mb-4 col-4"
+			required autofocus="autofocus" />
+		<input type="text" th:field="*{last_name}"
+			placeholder="Last Name" class="form-control mb-4 col-4"
+			required autofocus="autofocus" />
+			<input type="text" th:field="*{location}"
+			placeholder="Location" class="form-control mb-4 col-4"
+			required autofocus="autofocus" />
+		<p>
+    <label>Courses:
+        <input type="checkbox" name="courses"
+            th:each="course : ${listAllCourses}"
+            th:text="${course.course_name}"
+            th:value="${course.course_id}"
+            th:field="*{courses}"
+        />
+    </label>
+</p>
+<br>
+		<button type="submit" class="btn btn-info col-2"> Save Student</button>
+	</form>
+	</div>
+</body>
+</html>

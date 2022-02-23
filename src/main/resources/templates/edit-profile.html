@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Management System</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h1>Management System</h1>
+		<hr>
+		<h2>Update User</h2>
+		<form action="#" th:action="@{/register}"
+			method="POST">
+			<!--Add hidden form field to handle update -->
+			<label class="control-label" for="firstName"> First Name </label>
+			<input type="text"
+				class="form-control mb-4 col-4"> 
+			<label class="control-label" for="firstName"> Last Name </label>
+			<input type="text" 
+				class="form-control mb-4 col-4"> 
+			<label class="control-label" for="firstName"> Email</label>
+				<input type="text" th:value="${#authentication.getPrincipal().getUsername()}" 
+				 class="form-control mb-4 col-4"> 
+			<button type="submit" class="btn btn-info col-2">Update
+				User</button>
+		</form>
+	</div>
+</body>
+</html>
