@@ -21,8 +21,4 @@ public class MainController {
 	public String editProfile() {
 		return "edit-profile";
 	}
-//	@GetMapping("/student")
-//	public String s_index() {
-//		return "c_index";
-//	}
 }

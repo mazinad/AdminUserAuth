@@ -18,6 +18,7 @@
             <li><a th:href=@{/s_index}>Students</a> </li>
             <li><a th:href="@{/c_index}">Course</a> </li>
             <li><a th:href="@{/test}">Edit Profile</a></li>
+            <li><a th:href="@{/addStudentCourses}">Assign Courses</a></li>
             <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
         </ul>
     </div>

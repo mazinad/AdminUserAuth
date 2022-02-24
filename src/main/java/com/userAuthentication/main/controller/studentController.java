@@ -41,9 +41,23 @@ public class studentController {
 		return "new_student";
 
 	}
-
+	@GetMapping("/addStudentCourses")
+	public String showStudentCourses(Model model){
+		Student student1 = new Student();
+		model.addAttribute("student",student1);
+		model.addAttribute("listAllCourses", courseService.getAllCourses());
+		model.addAttribute("listStudent", studentService.getStudents());
+		return "Student_Course";
+	}
 	@PostMapping("/saveStudent")
 	public String saveStudent(@ModelAttribute("student") Student student) {
+		// save employee to database
+		studentService.saveStudents(student);
+		return "redirect:/s_index";
+
+	}
+	@PostMapping("/saveStudent1")
+	public String saveStudent1(@ModelAttribute("student") Student student) {
 		// save employee to database
 		studentService.saveStudents(student);
 		return "redirect:/s_index";
