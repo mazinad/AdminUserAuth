@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Management System</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1> Department System</h1>
+    <hr>
+    <h2>Save Course</h2>
+    <form action="#" th:action="@{/saveDepartment}" th:object="${department}"
+          method="POST">
+        <input type="text" th:field="*{name}"
+               placeholder="Course Name" class="form-control mb-4 col-4">
+        <button type="submit" class="btn btn-info col-2"> Save Department</button>
+    </form>
+</div>
+</body>
+</html>
