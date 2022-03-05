@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,8 @@ public class ForgotPasswordController {
     private final MessageSource messageSource;
     private final PasswordResetTokenService passwordResetTokenService;
     private final EmailService emailService;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     public ForgotPasswordController(UserService userService, MessageSource messageSource, PasswordResetTokenService passwordResetTokenService, EmailService emailService) {
         this.userService = userService;
@@ -45,7 +49,7 @@ public class ForgotPasswordController {
     }
 
     @GetMapping
-    public String viewPage(){
+    public String viewPage() {
         return "forgot-password";
     }
 
@@ -54,12 +58,14 @@ public class ForgotPasswordController {
                                         BindingResult result,
                                         Model model,
                                         RedirectAttributes attributes,
-                                        HttpServletRequest request){
-        if(result.hasErrors()){
+                                        HttpServletRequest request) {
+        if (result.hasErrors()) {
+            logger.error("An error has occured while fetching the user " + result.hasErrors());
             return "forgot-password";
         }
         User user = userService.findByEmail(passwordForgot.getEmail());
-        if(user == null){
+        if (user == null) {
+            logger.warn("we could not find the user with this email" + user);
             model.addAttribute("emailError", messageSource.getMessage("We could not find an account for that email address.", new Object[]{}, Locale.ENGLISH));
             return "forgot-password";
         }
@@ -69,7 +75,8 @@ public class ForgotPasswordController {
         token.setToken(UUID.randomUUID().toString());
         token.setExpirationDate(LocalDateTime.now().plusMinutes(30));
         token = passwordResetTokenService.save(token);
-        if(token == null){
+        if (token == null) {
+            logger.warn("Token Not Found with this user" + token);
             model.addAttribute("tokenError", messageSource.getMessage("An error occurred while creating the token for resetting your password, please try again later!", new Object[]{}, Locale.ENGLISH));
             return "forgot-password";
         }
@@ -89,12 +96,12 @@ public class ForgotPasswordController {
         if email sent successfully redirect with flash attributes
          */
         emailService.send(mail);
-        attributes.addFlashAttribute("success", messageSource.getMessage("An email has been sent to your email address with a link to reset your password!",new Object[]{}, Locale.ENGLISH));
+        attributes.addFlashAttribute("success", messageSource.getMessage("An email has been sent to your email address with a link to reset your password!", new Object[]{}, Locale.ENGLISH));
         return "redirect:/forgot-password";
     }
 
     @ModelAttribute("passwordForgot")
-    public PasswordForgot passwordForgot(){
+    public PasswordForgot passwordForgot() {
         return new PasswordForgot();
     }
 }

@@ -1,5 +1,7 @@
 package com.userAuthentication.main.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +16,15 @@ import com.userAuthentication.main.service.courseService;
 
 @Controller
 public class courseController {
+	Logger log= LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private courseService courseService;
 	@GetMapping("/c_index")
 	public String viewHomePage(Model model) {
+		log.info("User has entered the Main Course Page");
 		model.addAttribute("listCourses", courseService.getAllCourses());
-
 		return "c_index";
+
 	}
 
 	@GetMapping("/showNewCourses")
@@ -35,24 +39,36 @@ public class courseController {
 	@PostMapping("/saveCourse")
 	public String saveCourse(@ModelAttribute("course") Course course) {
 		// save employee to database
-		courseService.saveCourses(course);
-		return "redirect:/c_index";
+		try {
+			courseService.saveCourses(course);
+		}catch (Exception e){
+			log.error("An error has while saving"+e);
+
+		}
+			log.debug("Existing the Save Course Part");
+			return "redirect:/c_index";
 
 	}
 
 	@GetMapping("/showFormForUpdate/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-		// get employee from the service
-		Course course = courseService.getCoursesById(id);
-		// set employee as model attribute to pre populate the form
-		model.addAttribute("course", course);
+		try {
+			Course course = courseService.getCoursesById(id);
+			model.addAttribute("course", course);
+		}catch (Exception e){
+			log.error("Error Occured while fetching data for updating"+e);
+		}
 		return "update_course";
 	}
 
 	@GetMapping("/deleteEmployee/{id}")
 	public String deleteEmployee(@PathVariable(value = "id") long id) {
-		// call delete employee method
-		this.courseService.deleteCoursesById(id);
+		try{
+			this.courseService.deleteCoursesById(id);
+		}catch (Exception e){
+			log.error("Error Occured while deleting  data for course"+e);
+		}
+
 		return "redirect:/c_index";
 	}
 }

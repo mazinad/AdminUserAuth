@@ -5,13 +5,12 @@ import java.util.List;
 import com.userAuthentication.main.model.Student;
 
 
-
-
 public interface studentService {
-	List<Student> getStudents();
+    List<Student> getStudents();
 
-	void saveStudents(Student student);
-	Student getStudentById(long id);
+    void saveStudents(Student student);
 
-	void deleteStudentId(long id);
+    Student getStudentById(long id);
+
+    void deleteStudentId(long id);
 }

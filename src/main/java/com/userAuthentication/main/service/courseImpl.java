@@ -11,7 +11,7 @@ import com.userAuthentication.main.model.Course;
 
 
 @Service
-public class courseImpl implements courseService{
+public class  courseImpl implements courseService{
 
 	@Autowired
 	private CourseRepository courseRepository;

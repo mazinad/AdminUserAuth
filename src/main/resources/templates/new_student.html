@@ -24,16 +24,15 @@
 			<input type="text" th:field="*{location}"
 			placeholder="Location" class="form-control mb-4 col-4"
 			required autofocus="autofocus" />
-		<p>
-    <label>Courses:
-        <input type="checkbox" name="courses"
-            th:each="course : ${listAllCourses}"
-            th:text="${course.course_name}"
-            th:value="${course.course_id}"
-            th:field="*{courses}"
-        />
-    </label>
-</p>
+			<label class="col-form-label col-sm-4">Department: </label>
+			<div class="col-sm-8">
+				<div class="form-group">
+					<select th:field="*{department}" class="form-control" required>
+						<th:block th:each="cat: ${listDepartments}">
+							<option th:text="${cat.name}" th:value="${cat.id}" />
+						</th:block>
+					</select>
+				</div>
 <br>
 		<button type="submit" class="btn btn-info col-2"> Save Student</button>
 	</form>

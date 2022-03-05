@@ -1,5 +1,8 @@
 package com.userAuthentication.main.controller;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,33 +20,39 @@ import com.userAuthentication.main.webData.UserRegistrationDto;
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private UserService userService;
 
-	private UserService userService;
+    public UserRegistrationController(UserService userService) {
+        super();
+        this.userService = userService;
+    }
 
-	public UserRegistrationController(UserService userService) {
-		super();
-		this.userService = userService;
-	}
-	
-	@ModelAttribute("user")
+    @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
         return new UserRegistrationDto();
     }
-	
-	@GetMapping
-	public String showRegistrationForm() {
-		return "registration";
-	}
-	
-	@PostMapping
-	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-		userService.save(registrationDto);
-		return "redirect:/registration?success";
-	}
-	@GetMapping("/showFormForEdit/{id}")
-	public String showFormForEdit(@PathVariable(value = "id") long id, Model model) {
-		User user = userService.getUserById(id);
-		model.addAttribute("profile", user);
-		return "edit-profile";
-	}
+
+    @GetMapping
+    public String showRegistrationForm() {
+        return "registration";
+    }
+
+    @PostMapping
+    public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+        try {
+            userService.save(registrationDto);
+        } catch (Exception e) {
+            logger.error("An Error has occured while saving this user" + e);
+        }
+
+        return "redirect:/registration?success";
+    }
+
+    @GetMapping("/showFormForEdit/{id}")
+    public String showFormForEdit(@PathVariable(value = "id") long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("profile", user);
+        return "edit-profile";
+    }
 }

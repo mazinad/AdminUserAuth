@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	                "/js/**",
 	                "/css/**",
 	                "/forgot-password",
+					"/reset-password",
 	                "/img/**").permitAll()
 		.antMatchers("/c_index").authenticated()
 		.antMatchers("/s_index").authenticated()
