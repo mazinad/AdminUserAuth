@@ -1,6 +1,7 @@
 package com.userAuthentication.main.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "student")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long st_id;
     private String first_name;
     private String last_name;
@@ -21,9 +22,9 @@ public class Student {
             inverseJoinColumns = @JoinColumn(
                     name = "courses_id", referencedColumnName = "course_id"))
 
-    private Collection<Course> courses;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", nullable = false)
+    private List<Course> courses;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dept_id")
     private Department department;
 
     public Long getSt_id() {
@@ -58,11 +59,11 @@ public class Student {
         this.location = location;
     }
 
-    public Collection<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Collection<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

@@ -1,0 +1,7 @@
+2022-03-01 08:55:31,942 INFO  StartupInfoLogger:55 - [] Starting AdminUserAuthApplication using Java 17.0.2 on dan-Lenovo-ideapad-320-15ABR with PID 39810 (/home/dan/Documents/workspace-spring-tool-suite-4-4.13.1.RELEASE/AdminUserAuth/target/classes started by dan in /home/dan/Documents/workspace-spring-tool-suite-4-4.13.1.RELEASE/AdminUserAuth)
+2022-03-01 08:55:31,988 DEBUG StartupInfoLogger:56 - [] Running with Spring Boot v2.6.3, Spring v5.3.15
+2022-03-01 08:55:31,989 INFO  SpringApplication:637 - [] No active profile set, falling back to default profiles: default
+2022-03-01 08:55:42,551 INFO  StartupInfoLogger:61 - [] Started AdminUserAuthApplication in 11.283 seconds (JVM running for 17.6)
+2022-03-01 09:12:29,527 INFO  courseController:24 - [] User has entered the Main Course Page
+2022-03-01 09:12:38,421 INFO  studentController:34 - [] Just Entered the Student Page
+2022-03-01 09:13:07,582 INFO  studentController:34 - [] Just Entered the Student Page

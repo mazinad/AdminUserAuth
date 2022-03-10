@@ -16,59 +16,60 @@ import com.userAuthentication.main.service.courseService;
 
 @Controller
 public class courseController {
-	Logger log= LoggerFactory.getLogger(this.getClass());
-	@Autowired
-	private courseService courseService;
-	@GetMapping("/c_index")
-	public String viewHomePage(Model model) {
-		log.info("User has entered the Main Course Page");
-		model.addAttribute("listCourses", courseService.getAllCourses());
-		return "c_index";
+    Logger log = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private courseService courseService;
 
-	}
+    @GetMapping("/c_index")
+    public String viewHomePage(Model model) {
+        log.info("User has entered the Main Course Page");
+        model.addAttribute("listCourses", courseService.getAllCourses());
+        return "c_index";
 
-	@GetMapping("/showNewCourses")
-	public String showNewCourses(Model model) {
-		// create model attribute to bind form data
-		Course course = new Course();
-		model.addAttribute("course",course);
-		return "new_course";
+    }
 
-	}
+    @GetMapping("/showNewCourses")
+    public String showNewCourses(Model model) {
+        // create model attribute to bind form data
+        Course course = new Course();
+        model.addAttribute("course", course);
+        return "new_course";
 
-	@PostMapping("/saveCourse")
-	public String saveCourse(@ModelAttribute("course") Course course) {
-		// save employee to database
-		try {
-			courseService.saveCourses(course);
-		}catch (Exception e){
-			log.error("An error has while saving"+e);
+    }
 
-		}
-			log.debug("Existing the Save Course Part");
-			return "redirect:/c_index";
+    @PostMapping("/saveCourse")
+    public String saveCourse(@ModelAttribute("course") Course course) {
+        // save employee to database
+        try {
+            courseService.saveCourses(course);
+        } catch (Exception e) {
+            log.error("An error has while saving" + e);
 
-	}
+        }
+        log.debug("Existing the Save Course Part");
+        return "redirect:/c_index";
 
-	@GetMapping("/showFormForUpdate/{id}")
-	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-		try {
-			Course course = courseService.getCoursesById(id);
-			model.addAttribute("course", course);
-		}catch (Exception e){
-			log.error("Error Occured while fetching data for updating"+e);
-		}
-		return "update_course";
-	}
+    }
 
-	@GetMapping("/deleteEmployee/{id}")
-	public String deleteEmployee(@PathVariable(value = "id") long id) {
-		try{
-			this.courseService.deleteCoursesById(id);
-		}catch (Exception e){
-			log.error("Error Occured while deleting  data for course"+e);
-		}
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+        try {
+            Course course = courseService.getCoursesById(id);
+            model.addAttribute("course", course);
+        } catch (Exception e) {
+            log.error("Error Occured while fetching data for updating" + e);
+        }
+        return "update_course";
+    }
 
-		return "redirect:/c_index";
-	}
+    @GetMapping("/deleteEmployee/{id}")
+    public String deleteEmployee(@PathVariable(value = "id") long id) {
+        try {
+            this.courseService.deleteCoursesById(id);
+        } catch (Exception e) {
+            log.error("Error Occured while deleting  data for course" + e);
+        }
+
+        return "redirect:/c_index";
+    }
 }

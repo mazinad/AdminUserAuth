@@ -29,7 +29,7 @@
 				<div class="form-group">
 					<select th:field="*{department}" class="form-control" required>
 						<th:block th:each="cat: ${listDepartments}">
-							<option th:text="${cat.name}" th:value="${cat.id}" />
+							<option th:text="${cat.name}" th:value="${cat.dept_id}" />
 						</th:block>
 					</select>
 				</div>

@@ -1,26 +1,26 @@
 package com.userAuthentication.main.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
-@Entity()
+@Entity
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long dept_id;
     private String name;
     @OneToMany(mappedBy="department", fetch= FetchType.LAZY,cascade= CascadeType.ALL)
-    private Collection<Student> student;
+    private List<Student> student;
 
     public Department() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getDept_id() {
+        return dept_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDept_id(Long dept_id) {
+        this.dept_id = dept_id;
     }
 
     public String getName() {
@@ -31,11 +31,11 @@ public class Department {
         this.name = name;
     }
 
-    public Collection<Student> getStudent() {
+    public List<Student> getStudent() {
         return student;
     }
 
-    public void setStudent(Collection<Student> student) {
+    public void setStudent(List<Student> student) {
         this.student = student;
     }
 }

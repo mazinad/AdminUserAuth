@@ -22,7 +22,16 @@
 			<input type="text" th:field="*{last_name}"
 				class="form-control mb-4 col-4"> 
 				<input type="text"
-				th:field="*{location}" class="form-control mb-4 col-4"> 
+				th:field="*{location}" class="form-control mb-4 col-4">
+			<label class="col-form-label col-sm-4">Department: </label>
+			<div class="col-sm-8">
+				<div class="form-group">
+					<select th:field="*{department}" class="form-control" required>
+						<th:block th:each="cat: ${listDepartments}">
+							<option th:text="${cat.name}" th:value="${cat.id}" />
+						</th:block>
+					</select>
+				</div>
 			<button type="submit" class="btn btn-info col-2">Update
 				Student</button>
 		</form>
