@@ -1,5 +1,8 @@
 package com.userAuthentication.main.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +13,7 @@ public class Department {
     private Long dept_id;
     private String name;
     @OneToMany(mappedBy="department", fetch= FetchType.LAZY,cascade= CascadeType.ALL)
+    @JsonBackReference
     private List<Student> student;
 
     public Department() {

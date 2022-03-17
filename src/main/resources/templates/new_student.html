@@ -1,41 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Management System</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-	crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Management System</title>
+    <link crossorigin="anonymous"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+          rel="stylesheet">
 </head>
 <body>
-	<div class="container">
-		<h1> Student System</h1>
-		<hr>
-		<h2>Save Student</h2>
-		<form action="#" th:action="@{/saveStudent}" th:object="${student}"
-			method="POST">
-		<input type="text" th:field="*{first_name}"
-			placeholder="First Name" class="form-control mb-4 col-4"
-			required autofocus="autofocus" />
-		<input type="text" th:field="*{last_name}"
-			placeholder="Last Name" class="form-control mb-4 col-4"
-			required autofocus="autofocus" />
-			<input type="text" th:field="*{location}"
-			placeholder="Location" class="form-control mb-4 col-4"
-			required autofocus="autofocus" />
-			<label class="col-form-label col-sm-4">Department: </label>
-			<div class="col-sm-8">
-				<div class="form-group">
-					<select th:field="*{department}" class="form-control" required>
-						<th:block th:each="cat: ${listDepartments}">
-							<option th:text="${cat.name}" th:value="${cat.dept_id}" />
-						</th:block>
-					</select>
-				</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" th:href="@{/}">Dashboard</a>
+    <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#" th:href="@{/s_index}">Student </a>
+            <a class="nav-item nav-link " href="#" th:href="@{/c_index}"><span
+                    class="sr-only">(current)</span>Course</a>
+            <a class="nav-item nav-link " href="#" th:href="@{/d_index}">Department </a>
+            <li sec:authorize="isAuthenticated()"><a class="nav-item nav-link" th:href="@{/logout}">Logout</a></li>
+        </div>
+    </div>
+</nav>
 <br>
-		<button type="submit" class="btn btn-info col-2"> Save Student</button>
-	</form>
-	</div>
+<div class="container">
+    <h1> Student System</h1>
+    <hr>
+    <h2>Save Student</h2>
+    <form action="#" class="needs-validation" method="POST" novalidate
+          th:action="@{/saveStudent}" th:object="${student}">
+        <div>
+            <label class="form-label" for="validationCustom01">First name</label>
+            <input class="form-control mb-4 col-4" id="validationCustom01"
+                   placeholder="First Name" required th:field="*{first_name}"
+                   type="text"/>
+            <div class="invalid-feedback">
+                First Name Required
+            </div>
+        </div>
+        <div>
+            <label class="form-label" for="validationCustom02">Last Name</label>
+            <input class="form-control mb-4 col-4" id="validationCustom02"
+                   placeholder="Last Name" required th:field="*{last_name}"
+                   type="text"/>
+            <div class="invalid-feedback">
+                Last Name Required
+            </div>
+        </div>
+        <div>
+            <label class="form-label" for="validationCustom03">Location</label>
+            <input class="form-control mb-4 col-4" id="validationCustom03"
+                   placeholder="Location" required th:field="*{location}"
+                   type="text"/>
+            <div class="invalid-feedback">
+                please select a Location
+            </div>
+        </div>
+        <div>
+            <div class="form-group">
+                <label class="form-label" for="validationCustom04">Department: </label>
+                <select class="form-control-sm" id="validationCustom04"
+                        required th:field="*{department}">
+                    <th:block th:each="cat: ${listDepartments}">
+                        <option th:text="${cat.name}" th:value="${cat.dept_id}"/>
+                    </th:block>
+                </select>
+            </div>
+            <div class="invalid-feedback">
+                Please select a valid state
+            </div>
+        </div>
+        <br>
+        <div>
+            <button class="btn btn-info col-2" type="submit"> Save Student</button>
+        </div>
+    </form>
+</div>
+<script>
+    (() => {
+        'use strict';
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach((form) => {
+            form.addEventListener('submit', (event) => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 </body>
 </html>

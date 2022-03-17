@@ -5,13 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.userAuthentication.main.model.Course;
 import com.userAuthentication.main.service.courseService;
+
+import java.time.Clock;
+import java.util.Optional;
 
 
 @Controller
@@ -51,17 +51,22 @@ public class courseController {
 
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-        try {
-            Course course = courseService.getCoursesById(id);
-            model.addAttribute("course", course);
-        } catch (Exception e) {
-            log.error("Error Occured while fetching data for updating" + e);
-        }
-        return "update_course";
+//    @GetMapping("/showFormForUpdate/{id}")
+//    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+//        try {
+//            Course course = courseService.getCoursesById(id);
+//            model.addAttribute("course", course);
+//        } catch (Exception e) {
+//            log.error("Error Occured while fetching data for updating" + e);
+//        }
+//        return "update_course";
+//    }
+    @RequestMapping("/showFormForUpdate/{id}")
+    @ResponseBody
+    public Course findStudentById(@PathVariable Integer id, Model model){
+        Course course=courseService.getCoursesById(id);
+        return course;
     }
-
     @GetMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable(value = "id") long id) {
         try {

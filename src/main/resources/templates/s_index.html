@@ -44,7 +44,7 @@
             <th> First Name</th>
             <th> Last Name</th>
             <th>Location</th>
-<!--            <th>Department</th>-->
+            <th>Department</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -54,8 +54,8 @@
             <td th:text="${student.first_name}"></td>
             <td th:text="${student.last_name}"></td>
             <td th:text="${student.location}"></td>
-<!--            <td th:text="${student.department.name}"></td>-->
-            <td><a class="btn btn-primary"
+            <td th:text="${student.department.name}"></td>
+            <td data-target="editModal"><a class="btn btn-primary" id="editButton"
                    th:href="@{/showFormForUpdateStudent/{id}(id=${student.st_id})}"> Update</a>
                 <a class="btn btn-danger"
                    th:href="@{/deleteStudent/{id}(id=${student.st_id})}"> Delete</a>
@@ -70,17 +70,78 @@
     </table>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" class="needs-validation" method="POST" th:action="@{/saveStudent}"
+                      novalidate>
+                    <input type="hidden" name="st_id" id="idEdit" class="form-control" readonly>
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control mb-4 col-4" id="fnameEdit" name="first_name" placeholder="First Name" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control mb-4 col-4" id="lnameEdit" name="last_name" placeholder=" Name" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input class="form-control mb-4 col-4" id="locationEdit" name="credits" placeholder="Location" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department: </label>
+                        <select class="form-control-sm" id="departmentEdit" name="department"
+                                required>
+                            <th:block th:each="cat: ${listDepartments}">
+                                <option th:text="${cat.name}" th:value="${cat.dept_id}"/>
+                            </th:block>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!--CDN LINK FOR DATATABLE-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#studentTable").DataTable({
+        $("#courseTable").DataTable({
             'aoColumnDefs': [{
                 'bSortable': false,
                 'aTargets': [-1] /* 1st one, start by the right */
             }]
         });
     })
+</script>
+<script>
+    $('table #editButton').on('click',function(event){
+        event.preventDefault();
+        var href=$(this).attr('href');
+        $.get(href, function(course,status){
+            $('#idEdit').val(course.st_id);
+            $('#fnameEdit').val(course.first_name);
+            $('#lnameEdit').val(course.last_name);
+            $('#locationEdit').val(course.location);
+            $('#departmentEdit').val(course.department);
+        });
+        $('#editModal').modal();
+    });
 </script>
 </body>
 

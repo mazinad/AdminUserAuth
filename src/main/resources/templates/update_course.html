@@ -7,10 +7,25 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
+	<style>
+		.previous {
+			background-color: #04AA6D;
+			color: white;
+		}
+
+		.round {
+			border-radius: 50%;
+		}
+		a {
+			text-decoration: none;
+			display: inline-block;
+			padding: 8px 16px;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
-		<h1>Management System</h1>
+		<h1>Management System <a href="#" th:href="@{/c_index}" class="previous round">&#8249;</a></h1>
 		<hr>
 		<h2>Update Course</h2>
 		<form action="#" th:action="@{/saveCourse}" th:object="${course}"

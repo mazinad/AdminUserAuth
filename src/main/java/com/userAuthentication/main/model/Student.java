@@ -1,5 +1,8 @@
 package com.userAuthentication.main.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -21,10 +24,11 @@ public class Student {
                     name = "student_id", referencedColumnName = "st_id"),
             inverseJoinColumns = @JoinColumn(
                     name = "courses_id", referencedColumnName = "course_id"))
-
+    @JsonBackReference
     private List<Course> courses;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
+    @JsonBackReference
     private Department department;
 
     public Long getSt_id() {

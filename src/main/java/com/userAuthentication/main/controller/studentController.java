@@ -10,11 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.userAuthentication.main.model.Student;
 
@@ -36,6 +32,7 @@ public class studentController {
 	public String viewHomePage(Model model) {
 		log.info("Just Entered the Student Page");
 		model.addAttribute("listStudent", studentService.getStudents());
+		model.addAttribute("listDepartments",departmentService.getAllDepartments());
 		return "s_index";
 	}
 
@@ -88,7 +85,6 @@ public class studentController {
 		List<Course> allCourses = new ArrayList<>();
 		allCourses.addAll(existingCOurses);
 		allCourses.addAll(selectedCOurses);
-		System.out.println("all courses "+allCourses.size());
 		students.setCourses(allCourses);
 		try {
 			assignCourses.saveAssignedCourses(students);
@@ -100,20 +96,25 @@ public class studentController {
 
 	}
 
-	@GetMapping("/showFormForUpdateStudent/{id}")
-	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-		// get Student from the service
-		try {
-			Student student = studentService.getStudentById(id);
-			// set Student as model attribute to pre populate the form
-			model.addAttribute("student", student);
-			model.addAttribute("listDepartments",departmentService.getAllDepartments());
-		}catch(Exception ex){
-		log.error("An error occured while fetching the Id"+id);
-		}
-		return "update_Student";
+//	@GetMapping("/showFormForUpdateStudent/{id}")
+//	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+//		// get Student from the service
+//		try {
+//			Student student = studentService.getStudentById(id);
+//			// set Student as model attribute to pre populate the form
+//			model.addAttribute("student", student);
+//			model.addAttribute("listDepartments",departmentService.getAllDepartments());
+//		}catch(Exception ex){
+//		log.error("An error occured while fetching the Id"+id);
+//		}
+//		return "update_Student";
+//	}
+	@RequestMapping("/showFormForUpdateStudent/{id}")
+	@ResponseBody
+	public Student showFormForUpdate(@PathVariable long id, Model model){
+		Student student = studentService.getStudentById(id);
+		return student;
 	}
-
 	@GetMapping("/deleteStudent/{id}")
 	public String deleteEmployee(@PathVariable(value = "id") long id) {
 		// call delete Student method

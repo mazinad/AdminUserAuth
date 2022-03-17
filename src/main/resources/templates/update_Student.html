@@ -7,12 +7,27 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
 	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
 	crossorigin="anonymous">
+	<style>
+		.previous {
+			background-color: #04AA6D;
+			color: white;
+		}
+
+		.round {
+			border-radius: 50%;
+		}
+		a {
+			text-decoration: none;
+			display: inline-block;
+			padding: 8px 16px;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
-		<h1>Management System</h1>
+		<h1>Management System <a href="#" th:href="@{/s_index}" class="previous round">&#8249;</a></h1>
 		<hr>
-		<h2>Update Student</h2>
+		<h2>Update Student </h2>
 		<form action="#" th:action="@{/saveStudent}" th:object="${student}"
 			method="POST">
 			<!--Add hidden form field to handle update -->
@@ -23,17 +38,21 @@
 				class="form-control mb-4 col-4"> 
 				<input type="text"
 				th:field="*{location}" class="form-control mb-4 col-4">
-			<label class="col-form-label col-sm-4">Department: </label>
-			<div class="col-sm-8">
+
+			<div>
 				<div class="form-group">
-					<select th:field="*{department}" class="form-control" required>
+					<label class="form-labelp">Department: </label>
+					<select th:field="*{department}" class="form-control-sm" required>
 						<th:block th:each="cat: ${listDepartments}">
-							<option th:text="${cat.name}" th:value="${cat.id}" />
+							<option th:text="${cat.name}" th:value="${cat.dept_id}" />
 						</th:block>
 					</select>
 				</div>
+			</div>
+			<div>
 			<button type="submit" class="btn btn-info col-2">Update
 				Student</button>
+			</div>
 		</form>
 	</div>
 </body>

@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class DepartmentController {
@@ -50,17 +47,22 @@ public class DepartmentController {
 
     }
 
-    @GetMapping("/showFormForUpdateDepartment/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-        try {
-            Department department = departmentService.getDepartmentById(id);
-            model.addAttribute("department", department);
-        } catch (Exception e) {
-            log.error("Error Occured while fetching data for updating" + e);
-        }
-        return "update_department";
+//    @GetMapping("/showFormForUpdateDepartment/{id}")
+//    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+//        try {
+//            Department department = departmentService.getDepartmentById(id);
+//            model.addAttribute("department", department);
+//        } catch (Exception e) {
+//            log.error("Error Occured while fetching data for updating" + e);
+//        }
+//        return "update_department";
+//    }
+    @RequestMapping("/showFormForUpdateDepartment/{id}")
+    @ResponseBody
+    public Department showFormForUpdate(@PathVariable long id){
+        Department department = departmentService.getDepartmentById(id);
+        return department;
     }
-
     @GetMapping("/deleteDepartment/{id}")
     public String deleteEmployee(@PathVariable(value = "id") long id) {
         try {

@@ -1,5 +1,6 @@
 package com.userAuthentication.main.controller;
 
+import com.userAuthentication.main.model.Department;
 import com.userAuthentication.main.model.User;
 import com.userAuthentication.main.service.DepartmentService;
 import com.userAuthentication.main.service.UserService;
@@ -12,6 +13,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class MainController {
 	@Autowired
@@ -33,6 +38,17 @@ public class MainController {
 		model.addAttribute("studentCount",Studentservice.getStudents().size());
 		model.addAttribute("courseCount", courseService.getAllCourses().size());
 		model.addAttribute("departmentCount",departmentService.getAllDepartments().size());
+		List<Department>departments=departmentService.getAllDepartments();
+		List<String> deptNames = new ArrayList<>();
+		for (Department dep : departments){
+			deptNames.add(dep.getName());
+		}
+		List<Integer>studentNumber=new ArrayList<>();
+		for (Department dep : departments){
+			studentNumber.add(dep.getStudent().size());
+		}
+		model.addAttribute("departNames",deptNames);
+		model.addAttribute("studentNumber",studentNumber);
 		return "index";
 	}
 	@GetMapping("/test")
